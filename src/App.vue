@@ -1,43 +1,48 @@
 <template>
-  <v-data-table
-    v-model="selected"
-    dense
-    :headers="headers"
-    :items="horseData"
-    :single-select="singleSelect"
-    item-key="horseNumber"
-    :items-per-page="20"
-    show-select
-    class="elevation-1"
-  >
-    <template v-slot:top>
-        <v-switch
-          v-model="singleSelect"
-          label="Single select"
-          class="pa-3"
-        ></v-switch>
-    </template>
-  </v-data-table>
-  
+  <div>
+    <h1>2021-10-31 天皇賞・秋</h1>
+    <table class='horse-info-table'>
+      <thead>
+        <tr>
+          <th v-for="(header, index) in headers"
+              v-bind:key="index">
+            {{header.text}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr v-for="(horseRecord, index) in horseRecords"
+          v-bind:key="horseRecord.horseNumber">
+        <th>{{index + 1}}</th>
+        <td>{{horseRecord.horseNumber}}</td>
+        <td>{{horseRecord.horseName}}</td>
+        <td>{{horseRecord.tanshoOdds}}</td>
+      </tr>
+    </tbody>
+    </table>
+    <div class="obj-horses">
+      <p>1頭目</p>
+      <input v-model="message" class="sanrenpuku-1st"><br>
+      <p>2頭目</p>
+      <input v-model="message" class="sanrenpuku-2nd"><br>
+      <p>3頭目</p>
+      <input v-model="message" class="sanrenpuku-3rd">
+    </div>
+
+  </div>
 </template>
 
 <script>
   export default {
     data () {
       return {
-        singleSelect: false,
-        selected: [],
         headers: [
-          {
-            text: '馬番',
-            align: 'start',
-            sortable: false,
-            value: 'horseNumber',
-          },
+          { text: 'No.', value: 'index'},
+          { text: '馬番', value: 'horseNumber'},
           { text: '馬名', value: 'horseName' },
           { text: '単勝オッズ', value: 'tanshoOdds' }
         ],
-        horseData: [
+        horseRecords: [
           {
             horseNumber: 1,
             horseName: 'コントレイル',
@@ -124,3 +129,34 @@
     },
   }
 </script>
+
+<style>
+h1 {
+  color:gray;
+}
+
+table {
+  float: left;
+  border: solid 1px #ccc;
+  border-collapse:collapse;
+}
+th {
+  padding: 5px;
+  border: solid 1px #ccc;
+  background-color: #eee;
+}
+td {
+  padding: 5px;
+  border: solid 1px #ccc;
+}
+
+input {
+  float: left;
+  border: 2px solid black; /*枠線*/
+}
+
+.obj-horses div   {
+  margin-left: 100px;
+}
+
+</style>
